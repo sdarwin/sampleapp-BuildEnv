@@ -1,0 +1,3 @@
+[submodule "sample_app_rails_4"]
+	path = sample_app_rails_4
+	url = https://github.com/sdarwin/sample_app_rails_4
