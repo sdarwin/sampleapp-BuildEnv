@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    extends:
+      file: docker-compose.common.yml
+      service: db
+  web:
+    extends:
+      file: docker-compose.common.yml
+      service: web
+    build:
+      args:
+        - RAILS_ENV=production
+    environment:
+      - RAILS_ENV=production
+    depends_on:
+      - db
+
+
