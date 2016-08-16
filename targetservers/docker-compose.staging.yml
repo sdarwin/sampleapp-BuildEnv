@@ -11,6 +11,8 @@ services:
     image: jenkins:5000/sampleappstaging_web
     environment:
       - RAILS_ENV=staging
+    extra_hosts:
+      - "mysql:54.172.58.201"
     depends_on:
       - db
 
