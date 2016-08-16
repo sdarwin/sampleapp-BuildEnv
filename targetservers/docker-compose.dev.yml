@@ -8,9 +8,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: web
-    build:
-      args:
-        - RAILS_ENV=development
+    image: jenkins:5000/sampleappdev_web
     volumes:
       - ./sample_app_rails_4:/myapp
     environment:

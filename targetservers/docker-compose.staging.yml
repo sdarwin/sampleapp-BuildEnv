@@ -8,9 +8,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: web
-    build:
-      args:
-        - RAILS_ENV=staging
+    image: jenkins:5000/sampleappstaging_web
     environment:
       - RAILS_ENV=staging
     depends_on:
