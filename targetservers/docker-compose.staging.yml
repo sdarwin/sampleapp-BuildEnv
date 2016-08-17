@@ -4,6 +4,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: db
+    restart: always
   web:
     extends:
       file: docker-compose.common.yml
@@ -11,6 +12,7 @@ services:
     image: jenkins:5000/sampleappstagingv2_web
     environment:
       - RAILS_ENV=staging
+    restart: always
     extra_hosts:
       - "mysql:54.210.120.147"
     depends_on:
