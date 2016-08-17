@@ -1,0 +1,12 @@
+production: &default
+  adapter: mysql2
+  database: myapp
+  pool: 5
+  username: myapp
+  password: myapp
+  host: db
+
+test:
+  <<: *default
+  #database: myapp_test
+
