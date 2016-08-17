@@ -4,6 +4,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: db
+    restart: always
   web:
     extends:
       file: docker-compose.common.yml
@@ -14,6 +15,7 @@ services:
     extra_hosts:
       - "mysql:54.210.120.147"
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    restart: always
     depends_on:
       - db
 
