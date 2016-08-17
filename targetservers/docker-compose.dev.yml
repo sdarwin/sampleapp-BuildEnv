@@ -4,6 +4,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: db
+    restart: always
   web:
     extends:
       file: docker-compose.common.yml
@@ -13,6 +14,7 @@ services:
       - ./sample_app_rails_4:/myapp
     environment:
       - RAILS_ENV=development
+    restart: always
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     depends_on:
       - db
