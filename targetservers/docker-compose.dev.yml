@@ -8,14 +8,14 @@ services:
     extends:
       file: docker-compose.common.yml
       service: web
-    image: jenkins:5000/sampleappdev_web
+    image: jenkins:5000/sampleappdevv2_web
     volumes:
       - ./sample_app_rails_4:/myapp
     environment:
       - RAILS_ENV=development
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     extra_hosts:
-      - "mysql:54.172.58.201"
+      - "mysql:54.210.120.147"
     depends_on:
       - db
 

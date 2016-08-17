@@ -8,11 +8,11 @@ services:
     extends:
       file: docker-compose.common.yml
       service: web
-    image: jenkins:5000/sampleappstaging_web
+    image: jenkins:5000/sampleappstagingv2_web
     environment:
       - RAILS_ENV=staging
     extra_hosts:
-      - "mysql:54.172.58.201"
+      - "mysql:54.210.120.147"
     depends_on:
       - db
 

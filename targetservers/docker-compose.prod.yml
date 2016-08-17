@@ -8,11 +8,11 @@ services:
     extends:
       file: docker-compose.common.yml
       service: web
-    image: jenkins:5000/sampleappproduction_web
+    image: jenkins:5000/sampleappproductionv2_web
     environment:
       - RAILS_ENV=production
     extra_hosts:
-      - "mysql:54.172.58.201"
+      - "mysql:54.210.120.147"
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     depends_on:
       - db
