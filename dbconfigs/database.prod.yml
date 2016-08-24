@@ -4,7 +4,7 @@ production: &default
   pool: 5
   username: myapp
   password: myapp
-  host: mysql
+  host: mysql.samdarwin.com
 
 test:
   <<: *default

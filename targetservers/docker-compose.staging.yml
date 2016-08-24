@@ -13,8 +13,6 @@ services:
     environment:
       - RAILS_ENV=staging
     restart: always
-    extra_hosts:
-      - "mysql:54.211.181.5"
     depends_on:
       - db
 
