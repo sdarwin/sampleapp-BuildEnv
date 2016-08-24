@@ -9,7 +9,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: web
-    image: jenkins:5000/sampleappstagingv2_web
+    image: jenkins:5000/sampleappstagingv3_web
     environment:
       - RAILS_ENV=staging
     restart: always

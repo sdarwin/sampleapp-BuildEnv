@@ -9,7 +9,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: web
-    image: jenkins:5000/sampleappdevv2_web
+    image: jenkins:5000/sampleappdevv3_web
     volumes:
       - ./sample_app_rails_4:/myapp
     environment:
