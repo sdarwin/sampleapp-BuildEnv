@@ -14,7 +14,7 @@ services:
     environment:
       - RAILS_ENV=production
     extra_hosts:
-      - "mysql:54.210.120.147"
+      - "mysql:54.211.181.5"
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     depends_on:
       - db
