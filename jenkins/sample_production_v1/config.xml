@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.5.3">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>git@github.com:sdarwin/sampleapp-BuildEnv.git</url>
+        <credentialsId>docker-jenkins-test-project</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.SubmoduleOption>
+        <disableSubmodules>false</disableSubmodules>
+        <recursiveSubmodules>true</recursiveSubmodules>
+        <trackingSubmodules>true</trackingSubmodules>
+        <reference></reference>
+      </hudson.plugins.git.extensions.impl.SubmoduleOption>
+    </extensions>
+  </scm>
+  <assignedNode>slave1</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>cp dbconfigs/database.prod.yml sample_app_rails_4/config/database.yml
+/usr/local/bin/docker-compose -p sampleappproductionv1 -f docker-compose.prod.yml build
+/usr/local/bin/docker-compose -p sampleappproductionv1 -f docker-compose.prod.yml up -d
+sleep 10
+#testing phase
+/usr/local/bin/docker-compose -p sampleappproductionv1 -f docker-compose.prod.yml run -e RAILS_ENV=test --rm web  bundle exec rake db:reset
+/usr/local/bin/docker-compose -p sampleappproductionv1 -f docker-compose.prod.yml run -e RAILS_ENV=test --rm web  bundle exec rake db:migrate
+/usr/local/bin/docker-compose -p sampleappproductionv1 -f docker-compose.prod.yml run -e RAILS_ENV=test --rm web  bundle exec rake spec
+#test has succeeded.  push the image.
+docker tag sampleappproductionv1_web localhost:5000/sampleappproductionv1_web
+docker push localhost:5000/sampleappproductionv1_web
+/usr/local/bin/docker-compose -p sampleappproductionv1 -f docker-compose.prod.yml stop</command>
+    </hudson.tasks.Shell>
+    <org.jvnet.hudson.plugins.SSHBuilder plugin="ssh@2.4">
+      <siteName>sdarwin@production:22</siteName>
+      <command>git clone https://github.com/sdarwin/sampleapp-BuildEnv sampleapp || true
+cd sampleapp
+git checkout master
+git pull
+docker pull jenkins:5000/sampleappproductionv1_web 
+cd /home/sdarwin/sampleapp/targetservers
+/usr/local/bin/docker-compose -f docker-compose.prod.yml up -d
+/usr/local/bin/docker-compose -f docker-compose.prod.yml run --rm web bundle exec rake db:migrate
+/usr/local/bin/docker-compose -f docker-compose.prod.yml up -d
+</command>
+    </org.jvnet.hudson.plugins.SSHBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
